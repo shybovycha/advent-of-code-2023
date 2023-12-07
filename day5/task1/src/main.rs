@@ -286,55 +286,13 @@ fn main() {
 
     let result = seeds
         .iter()
-        .map(|&seed| {
-            let r = handle(&seed_to_soil_map, seed);
-
-            println!("{} seed_to_soil {}", seed, r);
-
-            r
-        })
-        .map(|soil| {
-            let r = handle(&soil_to_fertilizer_map, soil);
-
-            println!("{} soil_to_fertilizer {}", soil, r);
-
-            r
-        })
-        .map(|fertilizer| {
-            let r = handle(&fertilizer_to_water_map, fertilizer);
-
-            println!("{} fertilizer_to_water {}", fertilizer, r);
-
-            r
-        })
-        .map(|water| {
-            let r = handle(&water_to_light_map, water);
-
-            println!("{} water_to_light {}", water, r);
-
-            r
-        })
-        .map(|light| {
-            let r = handle(&light_to_temperature_map, light);
-
-            println!("{} light_to_temperature {}", light, r);
-
-            r
-        })
-        .map(|temperature| {
-            let r = handle(&temperature_to_humidity_map, temperature);
-
-            println!("{} temperature_to_humidity {}", temperature, r);
-
-            r
-        })
-        .map(|humidity| {
-            let r = handle(&humidity_to_location_map, humidity);
-
-            println!("{} humidity_to_location {}", humidity, r);
-
-            r
-        })
+        .map(|&seed| handle(&seed_to_soil_map, seed))
+        .map(|soil| handle(&soil_to_fertilizer_map, soil))
+        .map(|fertilizer| handle(&fertilizer_to_water_map, fertilizer))
+        .map(|water| handle(&water_to_light_map, water))
+        .map(|light| handle(&light_to_temperature_map, light))
+        .map(|temperature| handle(&temperature_to_humidity_map, temperature))
+        .map(|humidity| handle(&humidity_to_location_map, humidity))
         .min();
 
     println!("output = {}", result.unwrap_or(0));
