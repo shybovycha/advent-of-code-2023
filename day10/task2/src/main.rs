@@ -341,35 +341,7 @@ fn solve(field: &str) -> i32 {
                 visited2.insert((row, col));
             }
         }
-
-        // if !is_inside {
-        //     visited2.extend(tmp_inside);
-        // }
-
-        // println!();
     }
-
-    // let islands = visited2;
-
-    // let mut insides = HashSet::new();
-
-    // for row in 0..rows {
-    //     for col in 0..cols {
-    //         if !islands.contains(&(row, col)) {
-    //             continue;
-    //         }
-
-    //         // let top_walls = (0..row).filter(|&i| path.contains(&(i, col))).map(|i| char_at_field(field, i, col)).filter(|&ch| ch == 'L' || ch == '-' || ch == '7' || ch == 'J' || ch == 'F').count();
-    //         let left_walls = (0..col).filter(|&i| path.contains(&(row, i))).map(|i| char_at_field(field, row, i)).filter(|&ch| ch == 'L' || ch == '|' || ch == '7' || ch == 'J' || ch == 'F').count();
-    //         let is_outside = ((left_walls % 2) == 0);
-
-    //         if !is_outside {
-    //             insides.insert((row, col));
-    //         }
-    //     }
-    // }
-
-    println!("----------");
 
     let insides = visited2;
 
@@ -390,7 +362,7 @@ fn solve(field: &str) -> i32 {
                 };
                 print!("{}", p);
             } else {
-                // print!("{}", field.lines().nth(row).unwrap().chars().nth(col).unwrap());
+                // print!("{}", char_at_field(field, row, col));
                 print!(".");
             }
         }
@@ -424,11 +396,6 @@ fn bfs(rows: usize, cols: usize, path: &HashSet<(usize, usize)>, start_row: usiz
         q.push_back((row + 1, col));
         q.push_back((row, col - 1));
         q.push_back((row, col + 1));
-
-        q.push_back((row - 1, col - 1));
-        q.push_back((row + 1, col + 1));
-        q.push_back((row - 1, col - 1));
-        q.push_back((row + 1, col + 1));
     }
 
     visited
