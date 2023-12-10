@@ -1,52 +1,6 @@
 use std::collections::{HashSet, VecDeque};
 
 fn main() {
-    let field1 = r#"
-.....
-.S-7.
-.|.|.
-.L-J.
-.....
-"#;
-
-    let field2 = r#"
-...........
-.S-------7.
-.|F-----7|.
-.||.....||.
-.||.....||.
-.|L-7.F-J|.
-.|..|.|..|.
-.L--J.L--J.
-...........
-"#;
-
-    let field3 = r#"
-.F----7F7F7F7F-7....
-.|F--7||||||||FJ....
-.||.FJ||||||||L7....
-FJL7L7LJLJ||LJ.L-7..
-L--J.L7...LJS7F-7L7.
-....F-J..F7FJ|L7L7L7
-....L7.F7||L7|.L7L7|
-.....|FJLJ|FJ|F7|.LJ
-....FJL-7.||.||||...
-....L---J.LJ.LJLJ...
-"#;
-
-    let field4 = r#"
-FF7FSF7F7F7F7F7F---7
-L|LJ||||||||||||F--J
-FL-7LJLJ||||||LJL-77
-F--JF--7||LJLJ7F7FJ-
-L---JF-JLJ.||-FJLJJ7
-|F|F-JF---7F7-L7L|7|
-|FFJF7L7F-JF7|JL---7
-7-L-JL7||F7|L7F-7F7|
-L.L7LFJ|||||FJL7||LJ
-L7JLJL-JLJLJL--JLJ.L
-"#;
-
     let field_last = r#"
 -J.|..|7F-J7.J7F7.-77LJ-FL-F77F77F7|F-FLF7.F.FL7F-J.|.FF7-|-F7F7F7.FF-F7LL7FF-J7.----77-FF-..JF7.L-.FF|-F7--|7F77L7FF77F77.FL-7-L.FL7.FF-7..
 |-JF7.J7F.LL7F7LL-7F-L7|||.-J7.L-J7.J.L|.|7L-L-|7JFFF-F77JLF|LJ|||.LFJLJ7LL-JL-|77|.FJF7LJJ-7|FF.|.F.|||LF-7|FJL|||||F-LJ|7JF|JJF7----JJ.L7-
@@ -409,4 +363,75 @@ fn char_at_field(field: &str, row: usize, col: usize) -> char {
         .chars()
         .nth(col)
         .unwrap()
+}
+
+#[cfg(test)]
+mod tests {
+    use super::solve;
+
+    #[test]
+    fn test_simple() {
+        let field = r"
+.....
+.S-7.
+.|.|.
+.L-J.
+.....
+        ";
+
+        assert_eq!(1, solve(field.trim()));
+    }
+
+    #[test]
+    fn test_going_outside() {
+        let field = r"
+...........
+.S-------7.
+.|F-----7|.
+.||.....||.
+.||.....||.
+.|L-7.F-J|.
+.|..|.|..|.
+.L--J.L--J.
+...........
+        ";
+
+        assert_eq!(4, solve(field.trim()));
+    }
+
+    #[test]
+    fn test_junk1() {
+        let field = r"
+.F----7F7F7F7F-7....
+.|F--7||||||||FJ....
+.||.FJ||||||||L7....
+FJL7L7LJLJ||LJ.L-7..
+L--J.L7...LJS7F-7L7.
+....F-J..F7FJ|L7L7L7
+....L7.F7||L7|.L7L7|
+.....|FJLJ|FJ|F7|.LJ
+....FJL-7.||.||||...
+....L---J.LJ.LJLJ...
+        ";
+
+        assert_eq!(8, solve(field.trim()));
+    }
+
+    #[test]
+    fn test_junk2() {
+        let field = r"
+FF7FSF7F7F7F7F7F---7
+L|LJ||||||||||||F--J
+FL-7LJLJ||||||LJL-77
+F--JF--7||LJLJ7F7FJ-
+L---JF-JLJ.||-FJLJJ7
+|F|F-JF---7F7-L7L|7|
+|FFJF7L7F-JF7|JL---7
+7-L-JL7||F7|L7F-7F7|
+L.L7LFJ|||||FJL7||LJ
+L7JLJL-JLJLJL--JLJ.L
+        ";
+
+        assert_eq!(10, solve(field.trim()));
+    }
 }
