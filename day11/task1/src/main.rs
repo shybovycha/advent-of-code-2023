@@ -2,32 +2,11 @@ fn main() {
     let space = include_str!("./input2.txt");
 
     println!("ans = {}", solve(space));
-
-    // let mut galaxy_id = 0;
-
-    // for (row, line) in space_processed.lines().enumerate() {
-    //     for (col, _) in line.chars().enumerate() {
-    //         if galaxy_positions.contains(&(row, col)) {
-    //             galaxy_id += 1;
-    //             print!("{}", galaxy_id);
-    //         } else {
-    //             print!(".");
-    //         }
-    //     }
-
-    //     println!();
-    // }
 }
 
 fn solve(space: &str) -> usize {
     let space_processed = prepare_space(space.trim());
     let galaxy_positions = find_galaxies(&space_processed);
-
-    // let galaxy_ids = galaxy_positions
-    //     .iter()
-    //     .enumerate()
-    //     .map(|(idx, (row, col))| (idx + 1, (*row, *col)))
-    //     .collect::<HashMap<usize, (usize, usize)>>();
 
     (0..galaxy_positions.len() - 1)
         .flat_map(|a| ((a + 1)..(galaxy_positions.len())).map(move |b| (a, b)))
@@ -42,7 +21,6 @@ fn solve(space: &str) -> usize {
 }
 
 fn prepare_space(space: &str) -> String {
-    // let rows = space.lines().count();
     let cols = space.lines().next().unwrap().len();
 
     let empty_rows: Vec<usize> = space
