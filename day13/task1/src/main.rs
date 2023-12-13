@@ -1380,7 +1380,6 @@ r".##...#..#...##..
 .###.#....#.###..".trim();
 
     let ans: usize = fields.iter().map(|field| solve(field)).flat_map(|(row, col)| [row * 100, col]).sum();
-    // let ans = solve(field1);
 
     println!("ans = {}", ans);
 }
@@ -1388,10 +1387,6 @@ r".##...#..#...##..
 fn solve(field: &str) -> (usize, usize) {
     let row = find_mirror_center_row(field);
     let col = find_mirror_center_row(&transpose(field).to_string());
-
-    // println!("source:\n{}\n", field);
-    // println!("transpose:\n{}\n", &transpose(field).to_string());
-    println!("row > {}\ncol > {}", row, col);
 
     (row, col)
 }
@@ -1416,12 +1411,8 @@ fn find_mirror_center_row(field: &str) -> usize {
     let rows = field.lines().count();
 
     for fold in (0..((rows - 1) / 2)).rev().chain(((rows - 1) / 2)..(rows - 1)).rev() {
-        // println!(">>> check fold #{}", fold);
-
         if fold < rows / 2 {
             let fold_size = fold + 1;
-
-            // println!(">>> (1) fold_size: {}", fold_size);
 
             let fold1 = field.lines().take(fold_size).collect::<Vec<_>>();
             let fold2 = field.lines().skip(fold_size).take(fold_size).collect::<Vec<_>>(); // can't rev this MOFO
@@ -1444,17 +1435,15 @@ fn find_mirror_center_row(field: &str) -> usize {
                 return fold + 1
             }
 
-            // println!(">>>> (1) fold1: {}", &fold1.collect::<Vec<_>>().join("\n"));
-            // println!(">>>> (1) fold2: {}", &fold2.collect::<Vec<_>>().join("\n"));
+            // WHY MUT IS REQUIRED?!
+            // let mut fold1 = field.lines().take(fold_size);
+            // let mut fold2 = field.lines().skip(fold_size).take(fold_size).rev(); // can't rev this MOFO
 
             // if (0..fold_size).all(|i| fold1.nth(i) == fold2.nth(fold_size - i)) {
-            //     println!(">>> (1) found fold: {}", fold + 1);
             //     return fold + 1
             // }
         } else {
             let fold_size = rows - (fold + 1);
-
-            // println!(">>> (2) fold_size: {}", fold_size);
 
             // the mutation does not make any sense whatsoever, but FU, it's rust!
             let fold1 = field.lines().skip(rows - (fold_size * 2)).take(fold_size).collect::<Vec<_>>();
