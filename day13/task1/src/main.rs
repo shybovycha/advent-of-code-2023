@@ -1408,67 +1408,27 @@ fn find_mirror_center_row(field: &str) -> usize {
     fold #5 - across 6/7 row: [6?7, 5?8, discard]
     fold #6 - across 7/8 row: [7?8, discard]
      */
-    let rows = field.lines().count();
+    let lines = field.lines().collect::<Vec<_>>();
+    let rows = lines.len();
 
     for fold in (0..((rows - 1) / 2)).rev().chain(((rows - 1) / 2)..(rows - 1)).rev() {
         if fold < rows / 2 {
             let fold_size = fold + 1;
 
-            let fold1 = field.lines().take(fold_size).collect::<Vec<_>>();
-            let fold2 = field.lines().skip(fold_size).take(fold_size).collect::<Vec<_>>(); // can't rev this MOFO
+            let fold1 = lines.iter().take(fold_size);
+            let fold2 = lines.iter().skip(fold_size).take(fold_size).rev();
 
-            let mut fl = true;
-
-            for i in 0..fold_size {
-                let s1 = fold1.get(i).unwrap();
-                let s2 = fold2.get(fold_size - 1 - i).unwrap();
-
-                // println!(">>> (1) {} vvv {} // {} vvv {}", s1, s2, i, fold_size + fold_size - 1 - i);
-
-                if s1 != s2 {
-                    fl = false;
-                    break;
-                }
-            }
-
-            if fl {
+            if fold1.zip(fold2).all(|(a, b)| a == b) {
                 return fold + 1
             }
-
-            // WHY MUT IS REQUIRED?!
-            // let mut fold1 = field.lines().take(fold_size);
-            // let mut fold2 = field.lines().skip(fold_size).take(fold_size).rev(); // can't rev this MOFO
-
-            // if (0..fold_size).all(|i| fold1.nth(i) == fold2.nth(fold_size - i)) {
-            //     return fold + 1
-            // }
         } else {
             let fold_size = rows - (fold + 1);
 
             // the mutation does not make any sense whatsoever, but FU, it's rust!
-            let fold1 = field.lines().skip(rows - (fold_size * 2)).take(fold_size).collect::<Vec<_>>();
-            let fold2 = field.lines().skip(rows - fold_size).take(fold_size).collect::<Vec<_>>();
+            let fold1 = lines.iter().skip(rows - (fold_size * 2)).take(fold_size);
+            let fold2 = lines.iter().skip(rows - fold_size).take(fold_size).rev();
 
-            // if (0..fold_size).all(|i| fold1.nth(i) == fold2.nth(fold_size - i)) {
-            //     println!(">>> (2) found fold: {}", fold + 1);
-            //     return fold + 1
-            // }
-
-            let mut fl = true;
-
-            for i in 0..fold_size {
-                let s1 = fold1.get(i).unwrap();
-                let s2 = fold2.get(fold_size - 1 - i).unwrap();
-
-                // println!(">>> (2) {} vvv {} // {} vvv {}", s1, s2, rows - (fold_size * 2) + i, rows - fold_size + fold_size - 1 - i);
-
-                if s1 != s2 {
-                    fl = false;
-                    break;
-                }
-            }
-
-            if fl {
+            if fold1.zip(fold2).all(|(a, b)| a == b) {
                 return fold + 1
             }
         }
