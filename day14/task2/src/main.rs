@@ -189,8 +189,6 @@ fn get_north_load(pos: &Vec<Vec<char>>, rows: usize, cols: usize) -> usize {
     }
 
     res
-
-    // pos.iter().enumerate().map(|(row, rs)| rs.iter().filter(|ch| **ch == 'O').count() * (rows - row)).sum()
 }
 
 fn roll_north(pos: &mut Vec<Vec<char>>, rows: usize, cols: usize) {

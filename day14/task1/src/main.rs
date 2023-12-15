@@ -164,12 +164,6 @@ fn solve(field: &str) -> usize {
     res
 }
 
-// fn calculate_load(field: &str) -> usize {
-//     let rows = field.lines().count();
-
-//     field.lines().enumerate().map(|(i, s)| s.chars().filter(|ch| *ch == 'O').count() * (rows - i)).sum()
-// }
-
 fn roll(field: &str) -> String {
     let lines = field.lines().collect::<Vec<_>>();
 
@@ -220,38 +214,6 @@ fn roll(field: &str) -> String {
             }
         }
     }
-
-    // let mut rocks = HashMap::new();
-
-    // for (row, line) in lines.iter().enumerate() {
-    //     for (col, ch) in line.chars().enumerate() {
-    //         if ch == 'O' || ch == '#' {
-    //             rocks.insert((row, col), ch);
-    //         }
-    //     }
-    // }
-
-    // let mut round_rocks = rocks
-    //     .iter()
-    //     .filter(|((row, col), &rock)| rock == 'O')
-    //     .map(|((row, col), _)| (row, col))
-    //     .collect::<Vec<_>>();
-
-    // round_rocks.sort_by_key(|(row, _)| row);
-
-    // for (row, col) in round_rocks {
-    //     let column = rocks.iter().filter(|((row1, col1), _)| col1 == col).map(|((r, _), _)| *r).collect::<Vec<_>>();
-
-    //     let rocks_above = column.iter().filter(|r| r < &row).collect::<Vec<_>>();
-    //     // let rocks_below = column.iter().filter(|(r, c)| r > &row).collect::<Vec<_>>();
-
-    //     let new_spot = **rocks_above.iter().max().unwrap();
-
-    //     if new_spot < *row {
-    //         rocks.remove(&(*row, *col));
-    //         rocks.insert((new_spot, *col), 'O');
-    //     }
-    // }
 
     new_field.iter().map(|ls| ls.iter().collect::<String>()).collect::<Vec<_>>().join("\n")
 }
